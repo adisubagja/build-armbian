@@ -95,6 +95,6 @@ jobs:
         tag_name: armbian_amlogic-s905d_${{ env.FILE_DATE }}
         files: ${{ env.FILEPATH }}/output/images/*
         body: |
-          This is Armbian image.
+          This is Armbian image for amlogic-s905d
           
           
