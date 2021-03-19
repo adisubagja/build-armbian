@@ -45,7 +45,10 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        
+        ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
+        [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
+        echo "ARMBIAN_BOARD: ${ARMBIAN_BOARD}"
+
     - name: Download source code
       id: down
       run: |
@@ -58,14 +61,11 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: Build Armbian
+    - name: Build Armbian for ${ARMBIAN_BOARD}
       id: build
       run: |
         cd build/
         sudo chmod +x compile.sh
-        ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
-        [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
-        echo "ARMBIAN_BOARD: ${ARMBIAN_BOARD}"
         sudo ./compile.sh  BOARD=${ARMBIAN_BOARD} BRANCH=current RELEASE=buster BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img
         [ -e ./.config ] && cp -f ./.config ./output/images/.config
         echo "::set-output name=status::success"
