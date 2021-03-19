@@ -28,6 +28,10 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
+    run: |
+      ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
+      [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
+      echo "ARMBIAN_BOARD=${ARMBIAN_BOARD}" >> $GITHUB_ENV
 
     steps:
     - name: Checkout
@@ -45,9 +49,6 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
-        [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
-        echo "ARMBIAN_BOARD=${ARMBIAN_BOARD}" >> $GITHUB_ENV
 
     - name: Download source code
       id: down
