@@ -47,7 +47,7 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
         ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
         [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
-        echo "ARMBIAN_BOARD: ${ARMBIAN_BOARD}"
+        echo "ARMBIAN_BOARD=$ARMBIAN_BOARD" >> $GITHUB_ENV
 
     - name: Download source code
       id: down
@@ -61,7 +61,7 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: Build Armbian for ${ARMBIAN_BOARD}
+    - name: Build Armbian for ${{ env.ARMBIAN_BOARD }}
       id: build
       run: |
         cd build/
