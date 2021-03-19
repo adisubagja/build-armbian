@@ -22,14 +22,6 @@ on:
     - cron: '0 17 * * 0'
 
 env:
-  RELEASE_SOURCE_TAG: v2020.11
-  BUILD_MINIMAL: yes
-  KERNEL_ONLY: no
-  KERNEL_CONFIGURE: no
-  BOARD: odroidn2
-  BRANCH: current
-  RELEASE: buster
-  BUILD_DESKTOP: no
   TZ: Asia/Shanghai
 
 jobs:
