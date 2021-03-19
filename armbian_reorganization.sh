@@ -12,26 +12,6 @@ error() {
     echo -e " [ \033[1;31m Error \033[0m ] ${1}"
 }
 
-
-if  [ ! -f ${armbian_oldpath}/*.img ]; then
-    echo "No armbian found, ready to download from github.com"
-    mkdir -p ${armbian_oldpath}
-
-    if [ -z ${GITHUB_REPOSITORY} ]; then
-       echo "GITHUB_REPOSITORY is null, Mandatory designation."
-       GITHUB_REPOSITORY=ophub/build-armbian
-    fi
-
-    echo "Download from github.com REPOSITORY."
-    curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "armbian_amlogic-.*/Armbian_.*\.img.gz" | head -n 1 > DOWNLOAD_URL
-    echo "DOWNLOAD_URL: $(cat DOWNLOAD_URL)"
-    [ -s DOWNLOAD_URL ] && wget -q -P ${armbian_oldpath} https://github.com/${GITHUB_REPOSITORY}/releases/download/$(cat DOWNLOAD_URL)
-
-    echo "gunzip Armbian."
-    cd ${armbian_oldpath} && gunzip Armbian_*.img.gz && sync
-fi
-
-
 make_armbian() {
 
     cd ${make_path}
