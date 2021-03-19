@@ -61,7 +61,7 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: Build Armbian
+    - name: Build Armbian for ${{ env.ARMBIAN_BOARD }}
       id: build
       run: |
         cd build/
