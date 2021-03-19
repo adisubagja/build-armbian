@@ -11,11 +11,11 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: 'SSH connection to Actions'
+        description: 'SSH connection'
         required: false
         default: 'false'
       armbianboard:
-        description: 'Set Armbian Board'
+        description: 'Armbian Board'
         required: false
         default: 'lepotato'
   schedule:
