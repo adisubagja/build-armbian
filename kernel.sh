@@ -23,7 +23,6 @@ build_kerlen() {
     cd  ${tmp_path}
         echo "Start build kernel for amlogic-s9xxx-openwrt ..."
 
-
         echo "copy armbian to tmp folder ..."
         cp ${armbian_oldpath}/*.img . && sync
         armbian_old=$( ls *.img 2>/dev/null | head -n 1 )
@@ -37,6 +36,9 @@ build_kerlen() {
             die "mount ${loop_old}p1 failed!"
         fi
         sync
+
+        echo "copy root files ..."
+        cp -rf ${armbianp1}/lib/modules ${root}/lib >/dev/null 2>&1
 
         echo "copy boot files ..."
         [ -f ${armbianp1}/boot/config-* ] && cp -f ${armbianp1}/boot/config-* ${boot}/ || die "config* does not exist"
@@ -52,9 +54,6 @@ build_kerlen() {
     cd ${boot}/dtb/amlogic/
         echo "delete redundant folders under amlogic ..."
         rm -rf $(find . -type d) 2>/dev/null
-
-        echo "copy root files ..."
-        cp -rf ${armbianp1}/lib/modules ${root}/lib >/dev/null 2>&1
 
     cd  ${root}/lib/modules
         echo "get version ..."
@@ -107,3 +106,4 @@ build_kerlen() {
 
 build_kerlen
 wait
+
