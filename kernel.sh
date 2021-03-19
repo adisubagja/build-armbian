@@ -13,7 +13,7 @@ error() {
     echo -e " [ \033[1;31m Error \033[0m ] ${1}"
 }
 
-build_kerlen() {
+build_kernel() {
 
         armbianp1=${tmp_path}/p1
         boot=${tmp_path}/boot
@@ -104,6 +104,6 @@ build_kerlen() {
     echo "build kernel complete ..."
 }
 
-build_kerlen
+build_kernel
 wait
 
