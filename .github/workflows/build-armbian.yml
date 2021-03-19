@@ -4,7 +4,7 @@
 # Copyright (C) 2020 https://github.com/ophub/build-armbian
 #========================================================================================================================
 
-name: Build Armbian For Amlogic-S905x3
+name: Build Armbian For Amlogic
 
 on:
   repository_dispatch:
