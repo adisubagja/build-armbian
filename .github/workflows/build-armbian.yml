@@ -63,7 +63,7 @@ jobs:
       run: |
         cd build/
         sudo chmod +x compile.sh
-        ARMBIAN_BOARD=$(github.event.inputs.armbianboard)
+        ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
         [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
         echo "ARMBIAN_BOARD: ${ARMBIAN_BOARD}"
         sudo ./compile.sh  BOARD=${ARMBIAN_BOARD} BRANCH=current RELEASE=buster BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img
