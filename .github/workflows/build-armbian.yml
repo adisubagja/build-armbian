@@ -92,9 +92,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: armbian_amlogic-${ARMBIAN_BOARD}_${{ env.FILE_DATE }}
+        tag_name: armbian_amlogic-${{ env.ARMBIAN_BOARD }}_${{ env.FILE_DATE }}
         files: ${{ env.FILEPATH }}/*
         body: |
-          This is Armbian image for amlogic-${ARMBIAN_BOARD}
+          This is Armbian image for amlogic-${{ env.ARMBIAN_BOARD }}
           
           
