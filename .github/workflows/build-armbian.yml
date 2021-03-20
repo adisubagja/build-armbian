@@ -22,6 +22,11 @@ on:
     - cron: '0 17 * * 0'
 
 env:
+  DELETE_RELEASE: true
+  DELETE_ARTIFACTS: true
+  KEEP_DAY: 30
+  KEEP_MININUM_RUNS: 0
+  KEEP_MININUM_RELEASE: 6
   TZ: Asia/Shanghai
 
 jobs:
@@ -72,6 +77,7 @@ jobs:
 
     - name: Build kernel
       id: kernel
+      if: steps.build.outputs.status == 'success'
       run: |
         sudo chmod +x kernel.sh
         sudo ./kernel.sh
@@ -82,7 +88,7 @@ jobs:
 
     - name: Upload Armbian image to Actions
       uses: kittaakos/upload-artifact-as-is@master
-      if: steps.build.outputs.status == 'success' && !cancelled()
+      if: steps.build.outputs.status == 'success'
       with:
         path: ${{ env.FILEPATH }}/
 
@@ -96,5 +102,22 @@ jobs:
         files: ${{ env.FILEPATH }}/*
         body: |
           This is Armbian image for amlogic-${{ env.ARMBIAN_BOARD }}
-          
+
+    - name: Delete older releases
+      uses: dev-drprasad/delete-older-releases@master
+      if: env.DELETE_RELEASE == 'true'
+      with:
+        keep_latest: ${{ env.KEEP_MININUM_RELEASE }}
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Delete older workflow runs and artifacts
+      uses: Mattraks/delete-workflow-runs@main
+      if: env.DELETE_ARTIFACTS == 'true'
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ${{ github.repository }}
+        retain_days: ${{ env.KEEP_DAY }}
+        keep_minimum_runs: ${{ env.KEEP_MININUM_RUNS }}
           
