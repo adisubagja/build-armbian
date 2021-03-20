@@ -1,7 +1,6 @@
 #========================================================================================================================
-# Description: Automatically Build Armbian with Github Actions
-# Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
-# Copyright (C) 2020 https://github.com/ophub/build-armbian
+# Description: Automatically Build Armbian For Amlogic S9xxx STB
+# Copyright (C) 2021 https://github.com/ophub/build-armbian
 #========================================================================================================================
 
 name: Build Armbian For Amlogic
