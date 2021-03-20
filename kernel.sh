@@ -18,6 +18,7 @@ error() {
 }
 
 build_kernel() {
+    echo "Start build kernel for amlogic-s9xxx-openwrt ..."
 
         armbianp1=${tmp_path}/p1
         boot=${tmp_path}/boot
@@ -25,8 +26,6 @@ build_kernel() {
         mkdir -p ${armbianp1} ${boot}/dtb/amlogic ${root}/lib
 
     cd  ${tmp_path}
-        echo "Start build kernel for amlogic-s9xxx-openwrt ..."
-
         echo "copy armbian to tmp folder ..."
         cp ${armbian_oldpath}/*.img . && sync
         armbian_old=$( ls *.img 2>/dev/null | head -n 1 )
@@ -39,7 +38,7 @@ build_kernel() {
         if ! mount ${loop_old}p1 ${armbianp1}; then
             die "mount ${loop_old}p1 failed!"
         fi
-        sync
+        sync && sleep 3
 
         echo "copy root files ..."
         cp -rf ${armbianp1}/lib/modules ${root}/lib >/dev/null 2>&1
@@ -54,6 +53,7 @@ build_kernel() {
 
         echo "supplement dtb file from github.com ..."
         svn checkout ${armbian_dtbpath} ${boot}/dtb/amlogic >/dev/null 2>&1
+        sync
 
     cd ${boot}/dtb/amlogic/
         echo "delete redundant folders under amlogic ..."
@@ -70,7 +70,7 @@ build_kernel() {
         rm -f *.ko
         x=0
         find ./ -type f -name '*.ko' -exec ln -s {} ./ \;
-        sync && sleep 3
+        sync
         x=$( ls *.ko -l 2>/dev/null | grep "^l" | wc -l )
         echo "Have [ ${x} ] files make *.ko link"
 
