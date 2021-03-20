@@ -5,7 +5,7 @@
 #========================================================================================================================
 
 make_path=${PWD}
-tmp_path=${make_path}/reorganization
+tmp_path=${make_path}/tmp_kernel
 armbian_oldpath=${make_path}/build/output/images
 armbian_dtbpath=https://github.com/ophub/amlogic-s9xxx-openwrt/trunk/amlogic-s9xxx/amlogic-dtb
 
