@@ -1,4 +1,8 @@
 #!/bin/bash
+#========================================================================================================================
+# Description: Automatically Build the kernel for OpenWrt
+# Copyright (C) 2021 https://github.com/ophub/build-armbian
+#========================================================================================================================
 
 make_path=${PWD}
 tmp_path=${make_path}/reorganization
