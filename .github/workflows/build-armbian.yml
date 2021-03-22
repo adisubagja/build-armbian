@@ -49,8 +49,7 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
-        [ -n ${ARMBIAN_BOARD} ] || ARMBIAN_BOARD=lepotato
+        [ -n ${{ github.event.inputs.armbianboard }} ] || ARMBIAN_BOARD=lepotato
         echo "ARMBIAN_BOARD=${ARMBIAN_BOARD}" >> $GITHUB_ENV
 
     - name: Download source code
