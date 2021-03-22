@@ -41,6 +41,12 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        if [ -n ${{ github.event.inputs.armbianboard }} ]; then
+           ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
+        else
+           ARMBIAN_BOARD=lepotato
+        fi
+        echo "ARMBIAN_BOARD=${ARMBIAN_BOARD}" >> $GITHUB_ENV
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
@@ -49,12 +55,6 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        if [ -n ${{ github.event.inputs.armbianboard }} ]; then
-           ARMBIAN_BOARD=${{ github.event.inputs.armbianboard }}
-        else
-           ARMBIAN_BOARD=lepotato
-        fi
-        echo "ARMBIAN_BOARD=${ARMBIAN_BOARD}" >> $GITHUB_ENV
 
     - name: Download source code
       id: down
